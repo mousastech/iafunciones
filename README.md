@@ -24,7 +24,7 @@ Existen funciones nativas para realizar tareas predefinidas o enviar cualquier i
 | [ai_summarize](https://docs.databricks.com/pt/sql/language-manual/functions/ai_summarize.html) | Resume el texto dado. |
 | [ai_translate](https://docs.databricks.com/pt/sql/language-manual/functions/ai_translate.html) | Traduce el texto proporcionado |
 
-El cuaderno <code>1.AI Funcations</code> trae algunos ejemplos.
+El cuaderno <code>1. IA Function</code> trae algunos ejemplos.
 
 
 
