@@ -1,5 +1,5 @@
-id_cliente,nome,sobrenome,num_pedidos
-1,João,Silva,23
+id_cliente,nombre,apellido,num_pedidos
+1,Joao,Silva,23
 2,Maria,Santos,45
 3,Pedro,Ferreira,12
 4,Ana,Souza,87
@@ -19,13 +19,13 @@ id_cliente,nome,sobrenome,num_pedidos
 18,Amanda,Santana,12
 19,Luciana,Castro,76
 20,Bruno,Moura,54
-21,Natália,Dias,23
+21,Natalia,Dias,23
 22,Leonardo,Carvalho,45
 23,Luana,Nascimento,67
 24,Roberto,Oliveira,98
 25,Caroline,Sousa,32
 26,Guilherme,Melo,76
-27,Lívia,Araújo,54
+27,Livia,Araujo,54
 28,Marcelo,Cardoso,23
 29,Renata,Farias,45
 30,Thales,Santos,67
