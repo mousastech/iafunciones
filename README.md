@@ -26,10 +26,14 @@ Existen funciones nativas para realizar tareas predefinidas o enviar cualquier i
 
 # Install 
 
+1. <b>Descarga el paquete</b> <br><br>
+<img src="https://github.com/mousastech/iafunciones/blob/e687d505103b307d4738a74d27bce453ca57c48c/img/Install_AI_Functions.gif?raw=true">
+<br><br>
+2. <b>Instalar los componentes</b><br>
+<img src="https://github.com/mousastech/iafunciones/blob/ad56e7e0e1fed640cb1ddfbd24c2316dba26b942/img/notebook_sql.png?raw=true">
 
-
-El cuaderno <code>1. IA Function</code> trae algunos ejemplos.
-
-
+<br><br>
+4. <b>Correr el laboratorio</b> <br><br>
+<img src="https://github.com/mousastech/iafunciones/blob/ad56e7e0e1fed640cb1ddfbd24c2316dba26b942/img/notebook_install.png?raw=true">
 
 
