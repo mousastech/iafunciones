@@ -1,4 +1,4 @@
-<img src="https://github.com/mousastech/iafunciones/blob/fd139cf6a61d68b2858b91907d3885cce238cf5d/img/headertools_aifunctions.png?raw=true">
+<img src="https://github.com/mousastech/iafunciones/blob/a29291ca12bdaace778eb9dc8b70ee301cd9bf7e/img/headertools_aifunctions.png?raw=true">
 
 # Funciones de IA en Databricks
 Capacitación práctica en la plataforma Databricks con enfoque en funcionalidades de IA generativa y el uso de Databricks AI Functions
