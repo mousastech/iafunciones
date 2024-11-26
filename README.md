@@ -1,6 +1,6 @@
 <img src="https://github.com/mousastech/iafunciones/blob/a29291ca12bdaace778eb9dc8b70ee301cd9bf7e/img/headertools_aifunctions.png?raw=true">
 
-# Objetctive
+# Objective
 Capacitación práctica en la plataforma Databricks con enfoque en funcionalidades de IA generativa y el uso de Databricks AI Functions
 
 # Overview
@@ -34,7 +34,7 @@ En este lab vamos a revisar los seguintes temas:
 - Traducción
 
 
-# Install 
+# Setup and Usage 
 
 1. <b>Descarga el paquete</b> <br><br>
 <img src="https://github.com/mousastech/iafunciones/blob/e687d505103b307d4738a74d27bce453ca57c48c/img/Install_AI_Functions.gif?raw=true">
