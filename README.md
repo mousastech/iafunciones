@@ -33,6 +33,9 @@ En este lab vamos a revisar los seguintes temas:
 - Extraer entidades
 - Traducción
 
+# Requirements
+
+- Se requiere el Unity Catalog activo
 
 # Setup and Usage 
 
