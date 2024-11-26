@@ -6,13 +6,13 @@ Capacitación práctica en la plataforma Databricks con enfoque en funcionalidad
 # Overview
 Hands-On LAB - Análisis de sentimiento, extracción de entidades y generación de texto
 
-Vamos a utilizar las [AI Functions](https://docs.databricks.com/en/large-language-models/ai-functions.html)
+Usemos las [AI Functions](https://docs.databricks.com/en/large-language-models/ai-functions.html)
 
 Estos nos permiten ejecutar modelos de IA generativa en nuestras bases de datos corporativas directamente en consultas SQL, un lenguaje ampliamente utilizado por analistas de datos y negocios. Con esto también podremos crear nuevas tablas con la información extraída para utilizarla en nuestros análisis.
 
 Existen funciones nativas para realizar tareas predefinidas o enviar cualquier instrucción deseada para su ejecución. A continuación se muestran las descripciones:
 
-| Gen AI SQL Function | Descrição |
+| Gen AI SQL Function | Descripción |
 | -- | -- |
 | [ai_analyze_sentiment](https://docs.databricks.com/pt/sql/language-manual/functions/ai_analyze_sentiment.html) | Análisis de sentimiento |
 | [ai_classify](https://docs.databricks.com/pt/sql/language-manual/functions/ai_classify.html) | Clasifica el texto según categorías definidas. |
