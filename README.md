@@ -36,4 +36,11 @@ Existen funciones nativas para realizar tareas predefinidas o enviar cualquier i
 4. <b>Correr el laboratorio</b> <br><br>
 <img src="https://github.com/mousastech/iafunciones/blob/ad56e7e0e1fed640cb1ddfbd24c2316dba26b942/img/notebook_install.png?raw=true">
 
+<br>
+
+<b>Talk to me:</b>
+
+[![Linkedin Badge](https://img.shields.io/badge/-Moises-blue?style=flat-square&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/rochamoises/)](https://www.linkedin.com/in/rochamoises/) 
+[![Gmail Badge](https://img.shields.io/badge/-mousas.rocha@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white&link=mailto:mousas.rocha@gmail.com)](mailto:mousas.rocha@gmail.com)
+
 
