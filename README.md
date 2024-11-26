@@ -1,9 +1,10 @@
 <img src="https://github.com/mousastech/iafunciones/blob/a29291ca12bdaace778eb9dc8b70ee301cd9bf7e/img/headertools_aifunctions.png?raw=true">
 
-# Funciones de IA en Databricks
+# Objetctive
 Capacitación práctica en la plataforma Databricks con enfoque en funcionalidades de IA generativa y el uso de Databricks AI Functions
 
-# Hands-On LAB - Análisis de sentimiento, extracción de entidades y generación de texto
+# Overview
+Hands-On LAB - Análisis de sentimiento, extracción de entidades y generación de texto
 
 Vamos a utilizar las [AI Functions](https://docs.databricks.com/en/large-language-models/ai-functions.html)
 
@@ -23,6 +24,15 @@ Existen funciones nativas para realizar tareas predefinidas o enviar cualquier i
 | [ai_similarity](https://docs.databricks.com/pt/sql/language-manual/functions/ai_similarity.html) | Calcula la similitud entre dos expresiones. |
 | [ai_summarize](https://docs.databricks.com/pt/sql/language-manual/functions/ai_summarize.html) | Resume el texto dado. |
 | [ai_translate](https://docs.databricks.com/pt/sql/language-manual/functions/ai_translate.html) | Traduce el texto proporcionado |
+
+# Key features
+
+En este lab vamos a revisar los seguintes temas:
+
+- Análisis de sentimiento
+- Extraer entidades
+- Traducción
+
 
 # Install 
 
