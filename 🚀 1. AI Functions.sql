@@ -109,7 +109,7 @@ SELECT * FROM clientes
 
 -- COMMAND ----------
 
-SELECT  *, ai_analyze_sentiment(avaliacao) AS sentimento FROM opiniones LIMIT 10
+SELECT  *, ai_analyze_sentiment(ai_translate(avaliacao, 'es')) AS sentimento FROM opiniones LIMIT 10
 
 -- COMMAND ----------
 
@@ -118,7 +118,7 @@ SELECT  *, ai_analyze_sentiment(avaliacao) AS sentimento FROM opiniones LIMIT 10
 -- COMMAND ----------
 
 -- DBTITLE 1,Ejemplo
-SELECT ai_translate('Hello, how are you?', 'es') texto;
+SELECT ai_translate(avaliacao, 'es') texto FROM opiniones LIMIT 10
 
 -- COMMAND ----------
 
@@ -127,11 +127,28 @@ SELECT  *, ai_translate(avaliacao, 'es') AS sentimento FROM opiniones LIMIT 10
 
 -- COMMAND ----------
 
+-- DBTITLE 1,Crear tabla de reseñas traducida
+CREATE TABLE resenas as 
+SELECT data as fecha,
+       id_avaliacao as id_resena,
+       id_cliente,
+       ai_translate(avaliacao, 'es') AS resena,
+       ai_query(
+  'databricks-meta-llama-3-1-70b-instruct',
+  concat('Si el sentimiento de evaluación es negativo, enumere los motivos de la insatisfacción en español. Evaluación: ', avaliacao)) AS motivo_insatisfaccion
+FROM opiniones
+
+-- COMMAND ----------
+
+select * from resenas LIMIT 10
+
+-- COMMAND ----------
+
 -- MAGIC %md #### 🔎 Extracción de los productos mencionados
 
 -- COMMAND ----------
 
-SELECT *, ai_extract(avaliacao, ARRAY('produto')) AS productos FROM opiniones LIMIT 10
+SELECT *, ai_extract(resena, ARRAY('producto')) AS productos FROM resenas LIMIT 10
 
 -- COMMAND ----------
 
@@ -141,10 +158,20 @@ SELECT *, ai_extract(avaliacao, ARRAY('produto')) AS productos FROM opiniones LI
 
 -- COMMAND ----------
 
+-- DBTITLE 1,Para checar el idioma
 SELECT *, ai_query(
-  'databricks-mixtral-8x7b-instruct',
-  concat('Si el sentimiento de evaluación es negativo, enumere los motivos de la insatisfacción. Evaluación: ', avaliacao)) AS motivo_insatisfaccion
+  'databricks-meta-llama-3-1-70b-instruct',
+  concat('Si el sentimiento de evaluación es negativo, enumere los motivos de la insatisfacción en español. Evaluación: ', avaliacao)) AS motivo_insatisfaccion
 FROM opiniones LIMIT 10
+
+-- COMMAND ----------
+
+-- DBTITLE 1,Checar en español
+SELECT *,
+       ai_query(
+  'databricks-meta-llama-3-1-70b-instruct',
+  concat('Si el sentimiento de evaluación es negativo, enumere los motivos de la insatisfacción en español. Evaluación: ', resena)) AS motivo_insatisfaccion
+FROM resenas LIMIT 10
 
 -- COMMAND ----------
 
@@ -165,8 +192,8 @@ FROM opiniones LIMIT 10
 
 -- COMMAND ----------
 
-CREATE OR REPLACE FUNCTION revision_evaluacion(avaliacao STRING)
-RETURNS STRUCT<produto_nome: STRING, produto_categoria: STRING, sentimento: STRING, resposta: STRING, resposta_motivo: STRING>
+CREATE OR REPLACE FUNCTION revisar_resena(resena STRING)
+RETURNS STRUCT<nombre_producto: STRING, producto_categoria: STRING, sentimiento: STRING, respuesta: STRING, resposta_motivo: STRING>
 RETURN FROM_JSON(
   AI_QUERY(
     'databricks-meta-llama-3-1-70b-instruct',
@@ -183,13 +210,13 @@ RETURN FROM_JSON(
         "nombre_producto": <entidade nombre>,
         "producto_categoria": <entidade categoria>,
         "sentimiento": <entidade sentimiento>,
-        "respuesta": <Sí o No para respuestas>,
-        "motivo": <razones de insatisfacción>
+        "respuesta": <S o N para respuestas>,
+        "motivo": <razones de la insatisfacción>
       }
-      Evaluación: ', avaliacao
+      Evaluación: ', resena
     )
   ),
-  "STRUCT<producto_categoria: STRING, producto_categoria: STRING, sentimiento: STRING, respuesta: STRING, motivo: STRING>"
+  "STRUCT<nombre_producto: STRING, producto_categoria: STRING, sentimiento: STRING, respuesta: STRING, motivo: STRING>"
 )
 
 -- COMMAND ----------
@@ -198,7 +225,7 @@ RETURN FROM_JSON(
 
 -- COMMAND ----------
 
-SELECT revision_evaluacion('Compré una tableta Samsung y estoy muy descontento con la calidad de la batería. Dura muy poco y tarda mucho en cargarse.') AS resultado
+SELECT revisar_resena('Compré el portátil ABC y estoy muy insatisfecho con la calidad de la pantalla. Los colores son débiles y la resolución es baja. Además, el rendimiento es lento y se bloquea con frecuencia. ¡No lo recomiendo!') AS resultado
 
 -- COMMAND ----------
 
@@ -206,9 +233,15 @@ SELECT revision_evaluacion('Compré una tableta Samsung y estoy muy descontento 
 
 -- COMMAND ----------
 
-CREATE OR REPLACE TABLE revisiones_revisadas AS
+-- DBTITLE 1,Crear una tabela de reseñas revisadas
+CREATE OR REPLACE TABLE resenas_revisadas AS
 SELECT *, resultado.* FROM (
-  SELECT *, revision_evaluacion(avaliacao) as resultado FROM opiniones LIMIT 10)
+  SELECT *, revisar_resena(resena) as resultado FROM resenas) LIMIT 10
+
+-- COMMAND ----------
+
+-- DBTITLE 1,Pruebar la función
+SELECT *, revisar_resena(resena) as resultado FROM resenas
 
 -- COMMAND ----------
 
@@ -232,14 +265,14 @@ SELECT *, resultado.* FROM (
 
 -- COMMAND ----------
 
-CREATE OR REPLACE FUNCTION GENERAR_RESPUESTA(nombre STRING, apellido STRING, num_pedidos INT, producto STRING, motivo STRING)
-RETURNS TABLE(resposta STRING)
+CREATE OR REPLACE FUNCTION GENERE_RESPUESTA(nombre STRING, apellido STRING, num_pedidos INT, producto STRING, motivo STRING)
+RETURNS TABLE(respuesta STRING)
 COMMENT 'Si el cliente expresa insatisfacción con un producto, utilice esta función para generar una respuesta personalizada'
 RETURN SELECT AI_QUERY(
     'databricks-meta-llama-3-1-70b-instruct',
     CONCAT(
-        "Eres un asistente virtual para un comercio electrónico. Nuestro cliente, ", generar_respuesta.nombre, " ", generar_respuesta.apellido, " quien compró ", generar_respuesta.num_pedidos, " productos este año no estaba satisfecho con el producto ", generar_respuesta.producto, 
-        ", pues ", generar_respuesta.motivo, ". Proporcionar un breve mensaje empático al cliente incluyendo una oferta para cambiar el producto si cumple con nuestra política de cambio. El canje se podrá realizar directamente a través de este asistente. ",
+        "Eres un asistente virtual para un comercio electrónico. Nuestro cliente, ", GENERE_RESPUESTA.nombre, " ", GENERE_RESPUESTA.apellido, " quien compró ", GENERE_RESPUESTA.num_pedidos, " productos este año no estaba satisfecho con el producto ", GENERE_RESPUESTA.producto, 
+        ", pues ", GENERE_RESPUESTA.motivo, ". Proporcionar un breve mensaje empático al cliente incluyendo una oferta para cambiar el producto si cumple con nuestra política de cambio. El canje se podrá realizar directamente a través de este asistente. ",
         "Quiero recuperar su confianza y evitar que deje de ser nuestro cliente. ",
         "Escribe un mensaje con algunas frases. ",
         "No agregue ningún texto que no sea el mensaje. ",
@@ -253,21 +286,25 @@ RETURN SELECT AI_QUERY(
 
 -- COMMAND ----------
 
- CREATE TABLE respuestas AS
-
+CREATE OR REPLACE TABLE respuestas AS
 WITH avaliacoes_enriq AS (
   SELECT a.*, c.* EXCEPT (c.id_cliente) 
-  FROM revisiones_revisadas a 
+  FROM resenas_revisadas a 
   LEFT JOIN clientes c 
   ON a.id_cliente = c.id_cliente 
-  WHERE a.resposta = 'S' 
+  WHERE a.respuesta = 'S' 
   LIMIT 10
 )
 
 SELECT 
   *, 
-  (SELECT * FROM generar_respuesta(e.nome, e.sobrenome, e.num_pedidos, e.produto_nome, e.resposta_motivo)) AS rascunho 
+  (SELECT * FROM genere_respuesta(e.nome, e.sobrenome, e.num_pedidos, e.nombre_producto, e.resposta_motivo)) AS bosquejo 
 FROM avaliacoes_enriq e
+
+-- COMMAND ----------
+
+-- DBTITLE 1,Revisar el bosquejo
+SELECT bosquejo from respuestas
 
 -- COMMAND ----------
 
