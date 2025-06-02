@@ -17,7 +17,7 @@ Existen funciones nativas para realizar tareas predefinidas o enviar cualquier i
 | [ai_analyze_sentiment](https://docs.databricks.com/pt/sql/language-manual/functions/ai_analyze_sentiment.html) | Análisis de sentimiento |
 | [ai_classify](https://docs.databricks.com/pt/sql/language-manual/functions/ai_classify.html) | Clasifica el texto según categorías definidas. |
 | [ai_extract](https://docs.databricks.com/pt/sql/language-manual/functions/ai_extract.html) | Extraiga las entidades deseadas |
-| [ai_fix_grammar](https://docs.databricks.com/pt/sql/language-manual/functions/ai_fix_grammar.html) | Corrige a gramática do texto fornecido |
+| [ai_fix_grammar](https://docs.databricks.com/pt/sql/language-manual/functions/ai_fix_grammar.html) | Corrige la gramática del texto dado. |
 | [ai_gen](https://docs.databricks.com/pt/sql/language-manual/functions/ai_gen.html) | Corrige la gramática del texto proporcionado. | 
 | [ai_mask](https://docs.databricks.com/pt/sql/language-manual/functions/ai_mask.html) | Enmascarar datos confidenciales |
 | [ai_query](https://docs.databricks.com/pt/sql/language-manual/functions/ai_query.html) | Enviar instrucciones para el modelo deseado. |
